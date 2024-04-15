@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { envConfig } from "@/utils/Types";
 import { env } from "hono/adapter";
-import { Redis } from "@upstash/redis";
+import { Redis } from "@upstash/redis/cloudflare";
 import { handle } from "hono/vercel";
 
 // Defining the runtime, as we are using cloudflare workers which is a JS edge runtime on Cloudflare CDN.

@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { responseType } from "@/utils/Types";
-import Main from "@/components/ui/home";
+import Main from "@/Components/ui/home";
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -18,7 +19,7 @@ function Search() {
     results: string[];
     duration: number;
   }>();
-
+  const [open, setOpen] = useState(false);
   // Enabling debouncing on search.
   useEffect(() => {
     // @ts-ignore
@@ -40,9 +41,12 @@ function Search() {
         return setSearchResult(undefined);
       }
 
-      const response = await fetch(`api/v1/search?q=${input}`);
+      const response = await fetch(
+        `https://flash.vipinofficialv1.workers.dev/api/v1/search?q=${input}`
+      );
       const data = (await response.json()) as {
-        response: responseType;
+        results: string[];
+        duration: number;
       };
       setSearchResult(data);
     } catch (err) {
@@ -76,12 +80,15 @@ function Search() {
               </CommandGroup>
             ) : null}
 
-            {/* For Printing search duration. */}
-            <CommandSeparator />
             {searchResult?.results ? (
-              <CommandGroup>
-                <CommandItem>{searchResult?.duration.toFixed(0)}ms</CommandItem>
-              </CommandGroup>
+              <>
+                <div className="h-px w-full bg-zinc-200" />
+
+                <p className="p-2 text-xs text-zinc-500 font-medium">
+                  Found {searchResult.results.length} results in{" "}
+                  {searchResult?.duration.toFixed(0)}ms
+                </p>
+              </>
             ) : null}
           </CommandList>
         </Command>
