@@ -59,4 +59,6 @@ app.get("/search", async (c) => {
 });
 
 export const GET = handle(app);
-export default app;
+// Commenting this because next.js doesn't allow exporting the app.
+// We are not deploying the backend on next so not a problem.
+// export default app;
